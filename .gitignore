@@ -28,6 +28,8 @@ massif-*
 *.pdb
 *.ilk
 *.lib
+ #HB added
+*.idb
 
 # Python build artifacts:
 *.pyc
