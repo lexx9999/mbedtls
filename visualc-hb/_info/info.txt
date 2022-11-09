@@ -1,0 +1,39 @@
+github
+original source: https://github.com/ARMmbed/mbedtls
+dev source: https://github.com/lexx9999/mbedtls/tags
+
+TortoiseGit: Sync, select "github_origin", Fetch all Refs, create branch from latest release tag (e.g. mbedtls-3.4.0)
+
+update fork (if not done automatically)
+cherry pick changes from previous work..based on new work..based branch (or rebase  work_v3.0.0_based on mbedtls_3.0.0 or v3.0.0 branch)
+(new vc files are in visualc-hb\vs2019)
+
+Or to recover from big changes: 
+
+pull and checkout lastest release, create a new branch, then: 
+
+copy visualc\vs2017 to visualc-hb\vs2022
+replace repo root .gitignore by VS-root ones (consider vc stuff correctly)
+convert solution, close solution
+open solution, delete release 64 configuration, save+close solution
+open solution, create release 64 configuration, from win32
+adjust and add mbedTLS-props only to mbedTLS-project
+c++ / code generation / runtime library: switch from mulithreaded DLL to non-dll mulithreaded (only to mbedTLS-project)
+
+optional?: adjust all project paths except mbedTLS-project compile to obj / bin
+ OutDir: $(VS_OBJ)$(SolutionName)\bin\$(ProjectName)-$(PlatformName)-$(Configuration)\
+ IntDir: $(VS_OBJ)$(SolutionName)\$(ProjectName)-$(PlatformName)-$(Configuration)\
+ TargetName: $(ProjectName) [_d]
+
+
+adjust mbedTLS-project add libmbedTLS.props, lib-style compile, 
+ General
+   OutDir: $(SolutionDir)..\..\lib\
+   IntDir: $(VS_OBJ)$(SolutionName)\$(ProjectName)-$(PlatformName)-$(Configuration)\
+   TargetName: libmbedTLS$(mbedTLSVer)-$(PlatformName) [_d]
+ Advanced
+   Use of MFC: mfc-static-lib
+ 
+build only mbedTLS all 4 seperate
+
+
